@@ -3,44 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elegant Store</title>
+<title>Toko Digital </title>
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+font-family:Segoe UI,sans-serif;
 }
 
 body{
-background:#f5f5f5;
-color:#333;
+background:#0b1020;
+color:white;
 }
 
 header{
-background:#111;
-color:white;
-padding:20px;
 text-align:center;
+padding:50px 20px;
+background:linear-gradient(135deg,#111936,#1c2c66);
 }
 
 header h1{
-font-size:32px;
+font-size:50px;
+color:#00d4ff;
+text-shadow:0 0 15px #00d4ff;
+}
+
+header p{
+margin-top:10px;
+color:#ccc;
 }
 
 .reputasi{
-background:white;
-padding:15px;
 text-align:center;
+padding:15px;
+background:#121a35;
+color:#00ff9d;
 font-weight:bold;
-color:#27ae60;
 }
 
 .container{
 max-width:1200px;
 margin:auto;
-padding:20px;
+padding:25px;
 }
 
 .products{
@@ -50,15 +56,20 @@ gap:20px;
 }
 
 .card{
-background:white;
+background:#121a35;
 border-radius:15px;
 overflow:hidden;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 0 20px #00d4ff55;
 }
 
 .card img{
 width:100%;
-height:220px;
+height:200px;
 object-fit:cover;
 }
 
@@ -67,174 +78,86 @@ padding:15px;
 }
 
 .price{
-color:#27ae60;
-font-size:20px;
-font-weight:bold;
+font-size:22px;
+color:#00ff9d;
 margin:10px 0;
 }
 
-select{
+select,button,input,textarea{
 width:100%;
 padding:10px;
-margin-bottom:10px;
-}
-
-button{
-width:100%;
-padding:12px;
+margin-top:10px;
 border:none;
-background:#111;
-color:white;
-cursor:pointer;
 border-radius:8px;
 }
 
-button:hover{
-background:#27ae60;
+select,input,textarea{
+background:#1b264d;
+color:white;
 }
 
-.cart{
-margin-top:40px;
-background:white;
+button{
+background:linear-gradient(90deg,#00d4ff,#7b3cff);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.cart,.feedback{
+background:#121a35;
 padding:20px;
 border-radius:15px;
-}
-
-.cart ul{
-list-style:none;
-}
-
-.cart li{
-padding:10px 0;
-border-bottom:1px solid #ddd;
-}
-
-.total{
-margin-top:15px;
-font-size:22px;
-font-weight:bold;
+margin-top:30px;
 }
 
 .checkout{
-margin-top:15px;
 background:#25D366;
-}
-
-.feedback{
-margin-top:40px;
-background:white;
-padding:20px;
-border-radius:15px;
-}
-
-.feedback input,
-.feedback textarea{
-width:100%;
-padding:10px;
-margin-bottom:10px;
-}
-
-.feedback-list{
-margin-top:20px;
+margin-top:15px;
 }
 
 .comment{
+background:#1b264d;
 padding:10px;
-background:#f0f0f0;
-margin-bottom:10px;
-border-radius:10px;
+margin-top:10px;
+border-radius:8px;
 }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Elegant Store</h1>
-<p>Produk Berkualitas & Terpercaya</p>
+<h1>🚀 Digital Store</h1>
+<p>Produk Digital Premium & Terpercaya</p>
 </header>
 
 <div class="reputasi">
-⭐⭐⭐⭐⭐ Reputasi Toko: 4.9/5 dari 5.000+ pelanggan puas
+⭐⭐⭐⭐⭐ Rating 4.9 | 10.000+ Transaksi Berhasil | Fast Response
 </div>
 
 <div class="container">
 
-<div class="products">
-
-<div class="card">
-<img src="https://picsum.photos/400/300?1">
-
-<div class="card-content">
-<h3>Premium Hoodie</h3>
-
-<div class="price">
-Rp 250.000
-</div>
-
-<select class="variant">
-<option>Hitam - M</option>
-<option>Hitam - L</option>
-<option>Putih - M</option>
-<option>Putih - L</option>
-</select>
-
-<button onclick="addCart('Premium Hoodie',250000,this)">
-Tambah Keranjang
-</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/300?2">
-
-<div class="card-content">
-<h3>Elegant T-Shirt</h3>
-
-<div class="price">
-Rp 150.000
-</div>
-
-<select class="variant">
-<option>Hitam</option>
-<option>Putih</option>
-<option>Navy</option>
-</select>
-
-<button onclick="addCart('Elegant T-Shirt',150000,this)">
-Tambah Keranjang
-</button>
-</div>
-</div>
-
-</div>
+<div class="products" id="products"></div>
 
 <div class="cart">
-<h2>Keranjang</h2>
-
+<h2>🛒 Keranjang Belanja</h2>
 <ul id="cartList"></ul>
-
-<div class="total">
-Total: Rp <span id="total">0</span>
-</div>
-
+<h3>Total: Rp <span id="total">0</span></h3>
 <button class="checkout" onclick="checkoutWA()">
 Checkout via WhatsApp
 </button>
 </div>
 
 <div class="feedback">
-<h2>Kritik & Saran</h2>
+<h2>💬 Kritik & Saran</h2>
 
 <input type="text" id="nama" placeholder="Nama">
 
-<textarea id="pesan"
-placeholder="Masukkan kritik atau saran"></textarea>
+<textarea id="pesan" placeholder="Tulis kritik atau saran"></textarea>
 
-<button onclick="kirimFeedback()">
-Kirim
-</button>
+<button onclick="kirimFeedback()">Kirim</button>
 
-<div class="feedback-list" id="feedbackList"></div>
+<div id="feedbackList"></div>
+
 </div>
 
 </div>
@@ -243,42 +166,95 @@ Kirim
 
 const nomorWA = "6281234567890";
 
+const products = [
+
+{
+name:"Script Bot WhatsApp",
+price:50000,
+image:"https://picsum.photos/500/300?1",
+variants:["Basic","Premium","Reseller"]
+},
+
+{
+name:"Canva Pro",
+price:25000,
+image:"https://picsum.photos/500/300?2",
+variants:["1 Bulan","3 Bulan","12 Bulan"]
+},
+
+{
+name:"Panel Pterodactyl",
+price:10000,
+image:"https://picsum.photos/500/300?3",
+variants:["1GB","2GB","Unlimited"]
+}
+
+];
+
 let cart=[];
 
-function addCart(nama,harga,btn){
+function renderProducts(){
 
-let variant =
-btn.parentElement.querySelector(".variant").value;
+document.getElementById("products").innerHTML=
+products.map((p,i)=>`
+
+<div class="card">
+
+<img src="${p.image}">
+
+<div class="card-content">
+
+<h3>${p.name}</h3>
+
+<div class="price">
+Rp ${p.price.toLocaleString()}
+</div>
+
+<select id="v${i}">
+${p.variants.map(v=>`<option>${v}</option>`).join("")}
+</select>
+
+<button onclick="addCart(${i})">
+Tambah Keranjang
+</button>
+
+</div>
+</div>
+
+`).join("");
+
+}
+
+function addCart(i){
 
 cart.push({
-nama,
-harga,
-variant
+name:products[i].name,
+price:products[i].price,
+variant:document.getElementById("v"+i).value
 });
 
 renderCart();
+
 }
 
 function renderCart(){
 
-let html="";
 let total=0;
 
-cart.forEach(item=>{
+document.getElementById("cartList").innerHTML=
+cart.map(item=>{
 
-html+=`
+total+=item.price;
+
+return `
 <li>
-${item.nama}<br>
-Varian: ${item.variant}<br>
-Rp ${item.harga.toLocaleString()}
+${item.name} - ${item.variant}
+(Rp ${item.price.toLocaleString()})
 </li>
 `;
 
-total+=item.harga;
+}).join("");
 
-});
-
-document.getElementById("cartList").innerHTML=html;
 document.getElementById("total").innerText=
 total.toLocaleString();
 
@@ -291,63 +267,53 @@ alert("Keranjang kosong");
 return;
 }
 
-let invoice=
-`🧾 *INVOICE PEMBELIAN*%0A`;
-invoice+=`━━━━━━━━━━%0A`;
-
 let total=0;
 
-cart.forEach((item,index)=>{
+let pesan=
+"🧾 *INVOICE DIGITAL STORE*%0A%0A";
 
-invoice+=`${index+1}. ${item.nama}%0A`;
-invoice+=`   Varian : ${item.variant}%0A`;
-invoice+=`   Harga : Rp ${item.harga.toLocaleString()}%0A%0A`;
+cart.forEach((item,i)=>{
 
-total+=item.harga;
+pesan+=`${i+1}. ${item.name}%0A`;
+pesan+=`Varian : ${item.variant}%0A`;
+pesan+=`Harga : Rp ${item.price.toLocaleString()}%0A%0A`;
+
+total+=item.price;
 
 });
 
-invoice+=`━━━━━━━━━━%0A`;
-invoice+=`💰 Total : Rp ${total.toLocaleString()}%0A`;
-invoice+=`━━━━━━━━━━%0A`;
-invoice+=`Terima kasih telah berbelanja 🙏`;
+pesan+=`💰 TOTAL : Rp ${total.toLocaleString()}%0A`;
+pesan+=`%0ATerima kasih telah berbelanja di Digital Store 🙏`;
 
 window.open(
-`https://wa.me/${nomorWA}?text=${invoice}`,
-'_blank'
+`https://wa.me/${nomorWA}?text=${pesan}`,
+"_blank"
 );
 
 }
 
 function kirimFeedback(){
 
-let nama =
-document.getElementById("nama").value;
+let nama=document.getElementById("nama").value;
+let pesan=document.getElementById("pesan").value;
 
-let pesan =
-document.getElementById("pesan").value;
-
-if(!nama || !pesan){
-return;
-}
+if(!nama || !pesan) return;
 
 let data=
 JSON.parse(localStorage.getItem("feedback"))||[];
 
-data.unshift({
-nama,
-pesan
-});
+data.unshift({nama,pesan});
 
 localStorage.setItem(
 "feedback",
 JSON.stringify(data)
 );
 
-loadFeedback();
-
 document.getElementById("nama").value="";
 document.getElementById("pesan").value="";
+
+loadFeedback();
+
 }
 
 function loadFeedback(){
@@ -355,22 +321,17 @@ function loadFeedback(){
 let data=
 JSON.parse(localStorage.getItem("feedback"))||[];
 
-let html="";
-
-data.forEach(item=>{
-
-html+=`
+document.getElementById("feedbackList").innerHTML=
+data.map(d=>`
 <div class="comment">
-<b>${item.nama}</b><br>
-${item.pesan}
+<b>${d.nama}</b><br>
+${d.pesan}
 </div>
-`;
+`).join("");
 
-});
-
-document.getElementById("feedbackList").innerHTML=html;
 }
 
+renderProducts();
 loadFeedback();
 
 </script>
