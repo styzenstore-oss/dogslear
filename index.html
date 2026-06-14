@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elegant Store</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f5f5f5;
+color:#333;
+}
+
+header{
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+header h1{
+font-size:32px;
+}
+
+.reputasi{
+background:white;
+padding:15px;
+text-align:center;
+font-weight:bold;
+color:#27ae60;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.card-content{
+padding:15px;
+}
+
+.price{
+color:#27ae60;
+font-size:20px;
+font-weight:bold;
+margin:10px 0;
+}
+
+select{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+background:#111;
+color:white;
+cursor:pointer;
+border-radius:8px;
+}
+
+button:hover{
+background:#27ae60;
+}
+
+.cart{
+margin-top:40px;
+background:white;
+padding:20px;
+border-radius:15px;
+}
+
+.cart ul{
+list-style:none;
+}
+
+.cart li{
+padding:10px 0;
+border-bottom:1px solid #ddd;
+}
+
+.total{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+}
+
+.checkout{
+margin-top:15px;
+background:#25D366;
+}
+
+.feedback{
+margin-top:40px;
+background:white;
+padding:20px;
+border-radius:15px;
+}
+
+.feedback input,
+.feedback textarea{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+}
+
+.feedback-list{
+margin-top:20px;
+}
+
+.comment{
+padding:10px;
+background:#f0f0f0;
+margin-bottom:10px;
+border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Elegant Store</h1>
+<p>Produk Berkualitas & Terpercaya</p>
+</header>
+
+<div class="reputasi">
+⭐⭐⭐⭐⭐ Reputasi Toko: 4.9/5 dari 5.000+ pelanggan puas
+</div>
+
+<div class="container">
+
+<div class="products">
+
+<div class="card">
+<img src="https://picsum.photos/400/300?1">
+
+<div class="card-content">
+<h3>Premium Hoodie</h3>
+
+<div class="price">
+Rp 250.000
+</div>
+
+<select class="variant">
+<option>Hitam - M</option>
+<option>Hitam - L</option>
+<option>Putih - M</option>
+<option>Putih - L</option>
+</select>
+
+<button onclick="addCart('Premium Hoodie',250000,this)">
+Tambah Keranjang
+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/400/300?2">
+
+<div class="card-content">
+<h3>Elegant T-Shirt</h3>
+
+<div class="price">
+Rp 150.000
+</div>
+
+<select class="variant">
+<option>Hitam</option>
+<option>Putih</option>
+<option>Navy</option>
+</select>
+
+<button onclick="addCart('Elegant T-Shirt',150000,this)">
+Tambah Keranjang
+</button>
+</div>
+</div>
+
+</div>
+
+<div class="cart">
+<h2>Keranjang</h2>
+
+<ul id="cartList"></ul>
+
+<div class="total">
+Total: Rp <span id="total">0</span>
+</div>
+
+<button class="checkout" onclick="checkoutWA()">
+Checkout via WhatsApp
+</button>
+</div>
+
+<div class="feedback">
+<h2>Kritik & Saran</h2>
+
+<input type="text" id="nama" placeholder="Nama">
+
+<textarea id="pesan"
+placeholder="Masukkan kritik atau saran"></textarea>
+
+<button onclick="kirimFeedback()">
+Kirim
+</button>
+
+<div class="feedback-list" id="feedbackList"></div>
+</div>
+
+</div>
+
+<script>
+
+const nomorWA = "6281234567890";
+
+let cart=[];
+
+function addCart(nama,harga,btn){
+
+let variant =
+btn.parentElement.querySelector(".variant").value;
+
+cart.push({
+nama,
+harga,
+variant
+});
+
+renderCart();
+}
+
+function renderCart(){
+
+let html="";
+let total=0;
+
+cart.forEach(item=>{
+
+html+=`
+<li>
+${item.nama}<br>
+Varian: ${item.variant}<br>
+Rp ${item.harga.toLocaleString()}
+</li>
+`;
+
+total+=item.harga;
+
+});
+
+document.getElementById("cartList").innerHTML=html;
+document.getElementById("total").innerText=
+total.toLocaleString();
+
+}
+
+function checkoutWA(){
+
+if(cart.length===0){
+alert("Keranjang kosong");
+return;
+}
+
+let invoice=
+`🧾 *INVOICE PEMBELIAN*%0A`;
+invoice+=`━━━━━━━━━━%0A`;
+
+let total=0;
+
+cart.forEach((item,index)=>{
+
+invoice+=`${index+1}. ${item.nama}%0A`;
+invoice+=`   Varian : ${item.variant}%0A`;
+invoice+=`   Harga : Rp ${item.harga.toLocaleString()}%0A%0A`;
+
+total+=item.harga;
+
+});
+
+invoice+=`━━━━━━━━━━%0A`;
+invoice+=`💰 Total : Rp ${total.toLocaleString()}%0A`;
+invoice+=`━━━━━━━━━━%0A`;
+invoice+=`Terima kasih telah berbelanja 🙏`;
+
+window.open(
+`https://wa.me/${nomorWA}?text=${invoice}`,
+'_blank'
+);
+
+}
+
+function kirimFeedback(){
+
+let nama =
+document.getElementById("nama").value;
+
+let pesan =
+document.getElementById("pesan").value;
+
+if(!nama || !pesan){
+return;
+}
+
+let data=
+JSON.parse(localStorage.getItem("feedback"))||[];
+
+data.unshift({
+nama,
+pesan
+});
+
+localStorage.setItem(
+"feedback",
+JSON.stringify(data)
+);
+
+loadFeedback();
+
+document.getElementById("nama").value="";
+document.getElementById("pesan").value="";
+}
+
+function loadFeedback(){
+
+let data=
+JSON.parse(localStorage.getItem("feedback"))||[];
+
+let html="";
+
+data.forEach(item=>{
+
+html+=`
+<div class="comment">
+<b>${item.nama}</b><br>
+${item.pesan}
+</div>
+`;
+
+});
+
+document.getElementById("feedbackList").innerHTML=html;
+}
+
+loadFeedback();
+
+</script>
+
+</body>
+</html>
