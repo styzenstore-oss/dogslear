@@ -2,19 +2,12 @@
   {
     "name": "Script Bot WhatsApp",
     "price": 50000,
-    "image": "https://picsum.photos/400/300?1",
-    "variants": ["Basic", "Premium", "Reseller"]
+    "image": "https://picsum.photos/400/300?1https://files.catbox.moe/c8tq1u.png",
+    "variants": ["Germany", "United Kingdom", "France"]
   },
   {
     "name": "Canva Pro",
-    "price": 25000,
     "image": "https://picsum.photos/400/300?2",
-    "variants": ["1 Bulan", "3 Bulan", "12 Bulan"]
+    "variants": ["1 Bulan 2500", "3 Bulan 5000", "12 Bulan 15000"]
   },
-  {
-    "name": "Panel Pterodactyl",
-    "price": 10000,
-    "image": "https://picsum.photos/400/300?3",
-    "variants": ["1GB", "2GB", "Unlimited"]
-  }
 ]
